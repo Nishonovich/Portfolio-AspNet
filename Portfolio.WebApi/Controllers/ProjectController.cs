@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Portfolio.WebApi.Commons.Utils;
 using Portfolio.WebApi.Interfaces.Services;
@@ -18,7 +19,7 @@ namespace Portfolio.WebApi.Controllers
         {
             _projectService = projectService;
         }
-        [HttpPost]
+        [HttpPost, Authorize(Roles = "User, Admin")]
         public async Task<IActionResult> CreateAsync([FromForm] ProjectCreateViewModel projectCreateViewModel)
         {
             long userId = long.Parse(HttpContext.User.FindFirst("Id")?.Value ?? "0");
