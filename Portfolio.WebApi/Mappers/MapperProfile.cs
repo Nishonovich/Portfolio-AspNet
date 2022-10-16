@@ -13,7 +13,7 @@ namespace Portfolio.WebApi.Mappers
             CreateMap<User, UserViewModel>().ReverseMap();
 
             CreateMap<Project, ProjectCreateViewModel>().ReverseMap();
-            CreateMap<Project, UserViewModel>().ReverseMap();
+            CreateMap<Project, ProjectViewModel>().ReverseMap();
         }
     }
 }
