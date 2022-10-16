@@ -18,13 +18,13 @@ namespace Portfolio.WebApi.ViewModels.Projects
         [MaxLength(35), MinLength(2)]
         public string TechnologiesUsed { get; set; } = String.Empty;
 
-        [Required(ErrorMessage = "ResursCodeni sselkasini kiriting")]
+        [Required(ErrorMessage = "ResursCodeni ssilkasini kiriting")]
         public string ResursCode { get; set; } = String.Empty;
 
         [Required(ErrorMessage = "Image is required")]
         [DataType(DataType.Upload)]
-        [MaxFileSize(3)]
-        [AllowedFileExtensions(new string[] { ".jpg", ".png" })]
+        [MaxFileSize(3, true)]
+        [AllowedFileExtensions(new string[] { ".jpg", ".png", ".jpeg"}, true)]
         public IFormFile Image { get; set; } = null!;
 
         public string Description { get; set; } = String.Empty;

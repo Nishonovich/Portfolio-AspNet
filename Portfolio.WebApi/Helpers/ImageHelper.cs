@@ -1,4 +1,6 @@
-﻿namespace Portfolio.WebApi.Helpers
+﻿using Telegram.Bot.Types;
+
+namespace Portfolio.WebApi.Helpers
 {
     public class ImageHelper
     {
@@ -6,6 +8,10 @@
         {
             string guid = Guid.NewGuid().ToString();
             return "IMG_" + guid + fileName;
+        }
+        public static string MakeLogoAsync(string fileName)
+        {
+            return $"CV_{Guid.NewGuid():N}_{fileName}";
         }
     }
 }

@@ -8,34 +8,37 @@ namespace Portfolio.WebApi.Repositories
 {
     public class UserRepository : IUserRepository
     {
-        private readonly AppDbContext _dbSet;
+        protected readonly DbSet<User> _dbSet;
+        protected readonly AppDbContext appDbContext;
+
 
         public UserRepository(AppDbContext dbContext)
         {
-            _dbSet = dbContext;
+            appDbContext = dbContext;
+            _dbSet = dbContext.Set<User>();
 
         }
         public async Task<User> CreateAsync(User user)
         {
-            var entry = await _dbSet.Users.AddAsync(user);
+            var entry = await _dbSet.AddAsync(user);
             return entry.Entity;
         }
 
         public Task DeleteAsync(User user)
-            => Task.FromResult(_dbSet.Users.Remove(user));
+            => Task.FromResult(_dbSet.Remove(user));
 
         public IQueryable<User> GetAll(Expression<Func<User, bool>>? expression = null, bool isTracking = true)
         {
-            var result = expression is null ? _dbSet.Users : _dbSet.Users.Where(expression);
+            var result = expression is null ? _dbSet : _dbSet.Where(expression);
 
             return isTracking ? result : result.AsNoTracking();
         }
 
         public async Task<User?> GetAsync(Expression<Func<User, bool>> expression)
-            => await _dbSet.Users.FirstOrDefaultAsync(expression);
+            => await _dbSet.FirstOrDefaultAsync(expression);
 
-        public Task<User> UpdateAsync(User user)
-            => Task.FromResult(_dbSet.Users.Update(user).Entity);
+        public async Task<User> UpdateAsync(User user)
+            => _dbSet.Update(user).Entity;
         
     }
 }

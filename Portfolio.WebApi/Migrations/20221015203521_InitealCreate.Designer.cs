@@ -12,8 +12,8 @@ using Portfolio.WebApi.Data;
 namespace Portfolio.WebApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221013194456_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20221015203521_InitealCreate")]
+    partial class InitealCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
