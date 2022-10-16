@@ -53,9 +53,10 @@ namespace Portfolio.WebApi.Services
             foreach (var user in users)
             {
                 var item = _mapper.Map<UserViewModel>(user);
-                item.ImageUrl = user.ImagePath;
+                item.ImageUrl = "https://portfoliowebapi.herokuapp.com//" +  user.ImagePath;
                 userViews.Add(item);
             }
+
 
             return userViews;
         }
@@ -68,7 +69,7 @@ namespace Portfolio.WebApi.Services
                 throw new StatusCodeException(HttpStatusCode.NotFound, "User not found!");
 
             var userViewModel = _mapper.Map<UserViewModel>(user);
-            userViewModel.ImageUrl = user.ImagePath;
+            userViewModel.ImageUrl = "https://portfoliowebapi.herokuapp.com//" + user.ImagePath;
             return userViewModel;
         }
 
@@ -98,7 +99,7 @@ namespace Portfolio.WebApi.Services
             await _dbContext.SaveChangesAsync();
 
             var userViewModel = _mapper.Map<UserViewModel>(user);
-            userViewModel.ImageUrl = user.ImagePath;
+            userViewModel.ImageUrl = "https://portfoliowebapi.herokuapp.com//" + user.ImagePath;
             return userViewModel;
         }
     }
