@@ -33,7 +33,7 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddMemoryCache();
 
 builder.Services.ConfigureJwtAuthorize(builder.Configuration);
-builder.Services.ConfigureSwaggerAuthorize(builder.Configuration);
+builder.Services.ConfigureSwaggerAuthorize();
 
 
 var botToken = builder.Configuration.GetSection("TelegramBotToken")["Production"];
@@ -65,6 +65,7 @@ HttpContextHelper.Accessor = app.Services.GetRequiredService<IHttpContextAccesso
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseStaticFiles();
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

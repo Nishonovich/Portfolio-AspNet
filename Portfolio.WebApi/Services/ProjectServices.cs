@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Storage.Internal.Mapping;
 using Portfolio.WebApi.Commons.Extensions;
 using Portfolio.WebApi.Commons.Utils;
 using Portfolio.WebApi.Data;
@@ -22,13 +23,17 @@ namespace Portfolio.WebApi.Services
         private readonly IProjectRepository _projectRepository;
         private readonly IMapper _mapper;
         private readonly IFileService _fileService;
+        private readonly IUserRepository _userRepository;
 
-        public ProjectServices(AppDbContext appDbContext, IMapper mapper, IFileService fileService, IProjectRepository projectRepository)
+        public ProjectServices(AppDbContext appDbContext, IMapper mapper, IFileService fileService, IProjectRepository projectRepository, IUserRepository userRepository
+
+            )
         {
             _dbContext = appDbContext;
             _projectRepository = projectRepository;
             _mapper = mapper;
             _fileService = fileService;
+            _userRepository = userRepository;
         }
         public async Task<ProjectViewModel> CreateAsync(long userId, ProjectCreateViewModel projectCreate)
         {
@@ -87,7 +92,7 @@ namespace Portfolio.WebApi.Services
 
             return projectViewModel;
         }
-
+         
         public async Task<ProjectViewModel> UpdateAsync(long id, ProjectCreateViewModel createViewModel)
         {
             var entity = await _projectRepository.GetAsync( project => project.Id == id);
@@ -97,17 +102,15 @@ namespace Portfolio.WebApi.Services
 
             await _fileService.DeleteImageAsync(entity.LogoPath);
 
-            Project project = _mapper.Map<Project>(createViewModel);
+            var project = _mapper.Map(createViewModel, entity);
           
-            project.Id = id;
-            project.LogoPath = await _fileService.SaveImageAsync(createViewModel.Image);
+            project.Id = id; 
+            project.LogoPath = await _fileService.SaveLogoAsync(createViewModel.Image);
 
             await _projectRepository.UpdateAsync(project);
             await _dbContext.SaveChangesAsync();
 
-            var projectViewModel = _mapper.Map<ProjectViewModel>(project);
-            projectViewModel.LogoPath = project.LogoPath;
-            return projectViewModel;
+            return _mapper.Map<ProjectViewModel>(project);
         }
     }
 }

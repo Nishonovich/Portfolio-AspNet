@@ -44,9 +44,10 @@ namespace Portfolio.WebApi.Controllers
             return Ok(await _projectService.GetAsync(project => project.Id == id));
         }
 
-        [HttpPut]
+        [HttpPut, Authorize(Roles = "User, Admin")]
         public async Task<IActionResult> UpdateAsync(int id, [FromForm] ProjectCreateViewModel projectCreateViewModell)
         {
+            long userId = long.Parse(HttpContext.User.FindFirst("Id")?.Value ?? "0");
             return Ok(await _projectService.UpdateAsync(id, projectCreateViewModell));
         }
     }

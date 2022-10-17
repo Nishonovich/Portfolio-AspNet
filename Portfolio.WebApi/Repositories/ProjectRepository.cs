@@ -30,11 +30,11 @@ namespace Portfolio.WebApi.Repositories
             return isTracking ? sources : sources.AsNoTracking();
         }
 
-        public async Task<Project?> GetAsync(Expression<Func<Project, bool>> expression)
-            => await _dbSet.Projects.FirstOrDefaultAsync(expression);
+        public Task<Project?> GetAsync(Expression<Func<Project, bool>> expression)
+            => _dbSet.Projects.FirstOrDefaultAsync(expression);
 
-        public Task<Project> UpdateAsync(Project project)
-            => Task.FromResult(_dbSet.Update(project).Entity);
+        public async Task UpdateAsync(Project project)
+            => _dbSet.Update(project);
 
     }
 }

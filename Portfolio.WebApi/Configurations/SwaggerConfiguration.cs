@@ -1,26 +1,24 @@
-﻿using Microsoft.OpenApi.Models;
+﻿ using Microsoft.OpenApi.Models;
 
 namespace Portfolio.WebApi.Configurations
 {
     public static class SwaggerConfiguration
     {
-        public static void ConfigureSwaggerAuthorize(this IServiceCollection services,
-           IConfiguration config)
+        public static void ConfigureSwaggerAuthorize(this IServiceCollection services)
         {
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(o =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Portfolio.WebApi", Version = "v1" });
-
-                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                o.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme 
                 {
                     Name = "Authorization",
-                    Description = "JWT Authorization header using the Bearer scheme. " +
-                                  "Example: \"Authorization: Bearer {token}\"",
+                    Description =
+                        "JWT Authorization headerusing the Bearer scheme. " +
+                        "Example: \"Authorization: Bearer {token}\"",
                     In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
+                    Type = SecuritySchemeType.ApiKey
                 });
 
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                o.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
                         new OpenApiSecurityScheme
