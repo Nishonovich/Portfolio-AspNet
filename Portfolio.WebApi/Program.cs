@@ -28,6 +28,14 @@ builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProjectService, ProjectServices>();
 
+//-----> Cors polisy
+builder.Services.AddCors(CorsOptions =>
+{
+    CorsOptions.AddPolicy("AllowAll", corsAccesses =>
+    corsAccesses.AllowAnyOrigin().AllowAnyHeader().AllowAnyOrigin().AllowAnyHeader()
+    );
+});
+
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddMemoryCache();
@@ -65,6 +73,8 @@ HttpContextHelper.Accessor = app.Services.GetRequiredService<IHttpContextAccesso
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseStaticFiles();
 app.UseHttpsRedirection();
+//-----> corsni chaqirish
+app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
