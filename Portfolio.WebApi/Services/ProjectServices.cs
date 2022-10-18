@@ -45,6 +45,8 @@ namespace Portfolio.WebApi.Services
 
             var projectView = await _projectRepository.CreateAsync(project);
 
+            project.LogoPath = "https://portfoliowebapi.herokuapp.com//" + projectView.LogoPath;
+
             await _dbContext.SaveChangesAsync();
 
             return _mapper.Map<ProjectViewModel>(projectView);
