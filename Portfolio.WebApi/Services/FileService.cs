@@ -6,13 +6,23 @@ namespace Portfolio.WebApi.Services
 {
     public class FileService : IFileService
     {
-        private readonly string _basePath;
+        private readonly string _basePath = String.Empty;
         private readonly string _imageFolderName = "Images";
         private readonly string _logoFolderName = "Logos";
 
         public FileService(IWebHostEnvironment environment)
         {
             _basePath = environment.WebRootPath;
+
+            if (!Directory.Exists(_basePath))
+            {
+                Directory.CreateDirectory(_basePath);
+            }
+            string imagepath = Path.Combine(_basePath, _imageFolderName);
+            if (!Directory.Exists(imagepath))
+            {
+                Directory.CreateDirectory(imagepath);
+            }
         }
 
         public Task<bool> DeleteImageAsync(string relativeFilePath)
