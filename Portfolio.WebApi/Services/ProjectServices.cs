@@ -73,7 +73,7 @@ namespace Portfolio.WebApi.Services
             foreach (var project in projects)
             {
                 var item = _mapper.Map<ProjectViewModel>(project);
-                item.LogoPath = project.LogoPath;
+                item.LogoPath = "https://portfoliowebapi.herokuapp.com//" + project.LogoPath;
                 projectViews.Add(item);
             }
 
@@ -88,7 +88,7 @@ namespace Portfolio.WebApi.Services
                 throw new StatusCodeException(HttpStatusCode.NotFound, "Project not found!");
 
             var projectViewModel = _mapper.Map<ProjectViewModel>(project);
-            projectViewModel.LogoPath = project.LogoPath;
+            projectViewModel.LogoPath = "https://portfoliowebapi.herokuapp.com//" +  project.LogoPath;
 
             return projectViewModel;
         }
