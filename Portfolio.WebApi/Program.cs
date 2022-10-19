@@ -32,7 +32,7 @@ builder.Services.AddScoped<IProjectService, ProjectServices>();
 builder.Services.AddCors(CorsOptions =>
 {
     CorsOptions.AddPolicy("AllowAll", corsAccesses =>
-    corsAccesses.AllowAnyOrigin().AllowAnyHeader().AllowAnyOrigin().AllowAnyHeader()
+    corsAccesses.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
     );
 });
 
